@@ -8,6 +8,8 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private Button _playButton;
     [SerializeField] private Button _menuButton;
 
+    [SerializeField] private TextMeshProUGUI _scoreText;
+
     private void Awake()
     {
         _playButton.onClick.AddListener(() =>
@@ -28,6 +30,8 @@ public class GameOverUI : MonoBehaviour
         if (GameManager.Instance.IsGameOver())
         {
             Show();
+
+            //_scoreText.text = "Score: " + DataManager.Instance.data.playerData.Score.ToString("000000");
         }
         else
         {

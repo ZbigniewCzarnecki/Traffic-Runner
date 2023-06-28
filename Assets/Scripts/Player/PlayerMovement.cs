@@ -8,11 +8,20 @@ public class PlayerMovement : PlayerBase
     public event EventHandler OnHitForward;
 
     [Header("Player")]
-    [SerializeField] private float _speed = 25f;
-    [SerializeField] private float _jumpForce = 20f;
-    [SerializeField] private float _changeLaneSpeed = 0.15f;
+    [SerializeField] private float _speed = 20f;
+    [SerializeField] private float _speedIncrease = 0.1f;
+    [SerializeField] private float _jumpForce = 35f;
+    [SerializeField] private float _changeLaneSpeed = 0.12f;
+    [Tooltip("Speed limit to prevent the player from jumping off the ramp uncontrollably.")]
+    [SerializeField] private float _walkUpSpeedLimit = 0.5f;
+
+    [Header("CoyoteTime")]
+    [Tooltip("The amount of time a player can still jump without being further on the ground.")]
+    [SerializeField] private float _timeToJumpMax = .2f;
+    private float _timeToJump;
 
     private bool _abbleToMove;
+    private bool _isJumping;
 
     private void Start()
     {
@@ -22,6 +31,8 @@ public class PlayerMovement : PlayerBase
         InputManager.Instance.OnSwipeRight += InputManager_OnSwipeRight;
         InputManager.Instance.OnSwipeUp += InputManager_OnSwipeUp;
         InputManager.Instance.OnSwipeDown += InputManager_OnSwipeDown;
+
+        Score.OnScoreTreshold += Score_OnScoreTreshold;
     }
 
     private void OnDestroy()
@@ -30,6 +41,8 @@ public class PlayerMovement : PlayerBase
         InputManager.Instance.OnSwipeRight -= InputManager_OnSwipeRight;
         InputManager.Instance.OnSwipeUp -= InputManager_OnSwipeUp;
         InputManager.Instance.OnSwipeDown -= InputManager_OnSwipeDown;
+
+        Score.OnScoreTreshold -= Score_OnScoreTreshold;
     }
 
     private void Update()
@@ -37,6 +50,21 @@ public class PlayerMovement : PlayerBase
         if (RaycastForward())
         {
             OnHitForward?.Invoke(this, EventArgs.Empty);
+        }
+
+        if (!_isJumping && _rb.velocity.y > _walkUpSpeedLimit)
+        {
+            float rbVelocityY = 0.1f;
+            _rb.velocity = new(_rb.velocity.x, rbVelocityY, _speed);
+        }
+
+        if (!IsGrounded())
+        {
+            _timeToJump += Time.deltaTime;
+        }
+        else
+        {
+            _timeToJump = 0;
         }
     }
 
@@ -90,7 +118,15 @@ public class PlayerMovement : PlayerBase
             return;
         }
 
-        Jump();
+        if (IsGrounded())
+        {
+            Jump();
+        }
+
+        if (!IsGrounded() && _timeToJump <= _timeToJumpMax)
+        {
+            Jump();
+        }
     }
 
     private void InputManager_OnSwipeDown(object sender, EventArgs e)
@@ -100,8 +136,17 @@ public class PlayerMovement : PlayerBase
             return;
         }
 
-        FallDown();
+        if (!IsGrounded())
+        {
+            FallDown();
+        }
+
         Slide();
+    }
+
+    private void Score_OnScoreTreshold(object sender, EventArgs e)
+    {
+        _speed += _speedIncrease;
     }
 
     private void MoveLeft()
@@ -158,18 +203,25 @@ public class PlayerMovement : PlayerBase
 
     private void Jump()
     {
-        if (IsGrounded())
-        {
-            _rb.AddForce(_jumpForce * Vector3.up, ForceMode.Impulse);
-        }
+        //reset Y velocity before jump (prevent bigger jumps on ramp)
+        _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
+        //actual Jump
+        _rb.AddForce(_jumpForce * Vector3.up, ForceMode.Impulse);
+        //_isJumping boolean preventing from not wanted jumps
+        StartCoroutine(JumpReset());
+    }
+
+    private IEnumerator JumpReset()
+    {
+        _isJumping = true;
+        yield return new WaitForSeconds(.5f);
+        _isJumping = false;
     }
 
     private void FallDown()
     {
-        if (!IsGrounded())
-        {
-            _rb.AddForce(_jumpForce * Vector3.down, ForceMode.Impulse);
-        }
+
+        _rb.AddForce(_jumpForce * Vector3.down, ForceMode.Impulse);
     }
 
     private void RunForward()

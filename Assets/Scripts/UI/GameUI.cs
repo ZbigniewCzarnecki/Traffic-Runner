@@ -1,10 +1,12 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
     [SerializeField] private Button _pauseButton;
+    [SerializeField] private TextMeshProUGUI _scoreText;
 
     private void Awake()
     {
@@ -20,6 +22,8 @@ public class GameUI : MonoBehaviour
         GameManager.Instance.OnGamePaused += Instance_OnGamePaused;
         GameManager.Instance.OnGameUnpaused += Instance_OnGameUnpaused;
 
+        //DataManager.Instance.data.playerData.OnScoreChanged += DataManager_OnScoreChanged;
+
         Hide();
     }
 
@@ -28,6 +32,8 @@ public class GameUI : MonoBehaviour
         GameManager.Instance.OnStateChanged -= GameManager_OnStateChanged;
         GameManager.Instance.OnGamePaused -= Instance_OnGamePaused;
         GameManager.Instance.OnGameUnpaused -= Instance_OnGameUnpaused;
+
+        //DataManager.Instance.data.playerData.OnScoreChanged -= DataManager_OnScoreChanged;
     }
 
     private void Instance_OnGamePaused(object sender, EventArgs e)
@@ -50,6 +56,11 @@ public class GameUI : MonoBehaviour
         {
             Hide();
         }
+    }
+
+    private void DataManager_OnScoreChanged(int obj)
+    {
+        //_scoreText.text = DataManager.Instance.data.playerData.Score.ToString("000000");
     }
 
     private void Show()

@@ -6,7 +6,7 @@ public class Trap : MonoBehaviour
     {
         other.TryGetComponent<Player>(out Player player);
         {
-            player.LostLive();
+            player.HitObstacle();
         }
     }
 }

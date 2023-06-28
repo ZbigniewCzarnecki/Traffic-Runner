@@ -5,7 +5,6 @@ using UnityEngine.Events;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private UnityEvent OnGameStart;
-    [SerializeField] private UnityEvent OnLevelCompleted;
     [SerializeField] private UnityEvent OnGameOver;
 
     public static GameManager Instance { get; private set; }
@@ -21,7 +20,6 @@ public class GameManager : MonoBehaviour
         CountdownToStart,
         GamePlaying,
         GameOver,
-        LevelCompleted,
     }
 
     private GameState _gameState = GameState.WaitForInput;
@@ -73,8 +71,6 @@ public class GameManager : MonoBehaviour
             case GameState.GameOver:
                 
                 break;
-            case GameState.LevelCompleted:
-                break;
             default:
                 break;
         }
@@ -102,16 +98,9 @@ public class GameManager : MonoBehaviour
     {
         _gameState = GameState.GameOver;
 
+        //DataManager.Instance.SaveData();
+
         OnGameOver?.Invoke();
-
-        OnStateChanged?.Invoke(this, EventArgs.Empty);
-    }
-
-    public void CompleteLevel()
-    {
-        _gameState = GameState.LevelCompleted;
-
-        OnLevelCompleted?.Invoke();
 
         OnStateChanged?.Invoke(this, EventArgs.Empty);
     }
@@ -136,14 +125,13 @@ public class GameManager : MonoBehaviour
         return _gameState == GameState.GameOver;
     }
 
-    public bool IsLevelCompleted()
+    public bool IsGamePaused()
     {
-        return _gameState == GameState.LevelCompleted;
+        return _isGamePaused;
     }
 
     public float GetCountdownToStartTimer()
     {
         return _countdownToStartTimer;
     }
-
 }

@@ -3,26 +3,20 @@ using UnityEngine.UI;
 
 public class PauseUI : MonoBehaviour
 {
-    [SerializeField] private Button _continueButton;
-    [SerializeField] private Button _restartButton;
-    [SerializeField] private Button _optionsButton;
+    [SerializeField] private Button _resumeButton;
+    [SerializeField] private Button _quitButton;
 
     private void Awake()
     {
-        _continueButton.onClick.AddListener(() =>
+        _resumeButton.onClick.AddListener(() =>
         {
             GameManager.Instance.TogglePauseGame();
             Hide();
         });
 
-        _restartButton.onClick.AddListener(() =>
+        _quitButton.onClick.AddListener(() =>
         {
             SceneLoader.Load(SceneLoader.Scene.GameScene);
-        });
-
-        _optionsButton.onClick.AddListener(() =>
-        {
-            //Open Options
         });
     }
 

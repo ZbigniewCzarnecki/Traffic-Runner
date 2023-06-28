@@ -30,7 +30,7 @@ public class PlayerAnimations : MonoBehaviour
             _animator.SetTrigger(RUN);
         }
 
-        if (GameManager.Instance.IsGameOver() || GameManager.Instance.IsLevelCompleted())
+        if (GameManager.Instance.IsGameOver())
         {
             _animator.SetTrigger(IDLE);
         }

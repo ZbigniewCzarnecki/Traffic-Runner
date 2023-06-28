@@ -14,18 +14,18 @@ public class Player : MonoBehaviour
         _playerMovement.OnHitForward += PlayerMovement_OnHitForward;
     }
 
+    private void OnDestroy()
+    {
+        _playerMovement.OnHitForward -= PlayerMovement_OnHitForward;
+    }
+
     private void PlayerMovement_OnHitForward(object sender, System.EventArgs e)
     {
-        LostLive();
+        HitObstacle();
     }
 
-    public void LostLive()
+    public void HitObstacle()
     {
         GameManager.Instance.GameOver();
-    }
-
-    public void CompleteLevel()
-    {
-        GameManager.Instance.CompleteLevel();
     }
 }
