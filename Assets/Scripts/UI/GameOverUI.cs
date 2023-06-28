@@ -31,7 +31,7 @@ public class GameOverUI : MonoBehaviour
         {
             Show();
 
-            //_scoreText.text = "Score: " + DataManager.Instance.data.playerData.Score.ToString("000000");
+            _scoreText.text = "Score: " + GameData.Instance.Score.ToString("000000");
         }
         else
         {

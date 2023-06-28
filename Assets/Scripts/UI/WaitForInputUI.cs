@@ -9,7 +9,7 @@ public class WaitForInputUI : MonoBehaviour
     {
         GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
 
-        //_bestScoreText.text = "Best Score: " + DataManager.Instance.data.playerData.BestScore.ToString("000000");
+        _bestScoreText.text = "Best Score: " + GameData.Instance.BestScore.ToString("000000");
     }
 
     private void OnDestroy()

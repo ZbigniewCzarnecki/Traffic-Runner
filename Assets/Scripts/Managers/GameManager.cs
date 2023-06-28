@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
     {
         _gameState = GameState.GameOver;
 
-        //DataManager.Instance.SaveData();
+        GameData.Instance.SerializeToJson();
 
         OnGameOver?.Invoke();
 

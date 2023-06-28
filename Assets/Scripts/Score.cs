@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Score : MonoBehaviour
 {
+    public static EventHandler OnScoreChange;
     public static EventHandler OnScoreTreshold;
 
     [SerializeField] private int _scoreToAdd = 10;
@@ -23,12 +24,19 @@ public class Score : MonoBehaviour
         if (_scoreTimer >= _scoreTimerMax)
         {
             _scoreTimer = 0;
-            //DataManager.Instance.data.playerData.Score += _scoreToAdd;
+            GameData.Instance.Score += _scoreToAdd;
 
-            //if (DataManager.Instance.data.playerData.Score % _scoreTreshold == 0)
-            //{
-            //    OnScoreTreshold?.Invoke(this, EventArgs.Empty);
-            //}
+            OnScoreChange?.Invoke(this, EventArgs.Empty);
+
+            if (GameData.Instance.BestScore < GameData.Instance.Score)
+            {
+                GameData.Instance.BestScore = GameData.Instance.Score;
+            }
+
+            if (GameData.Instance.Score % _scoreTreshold == 0)
+            {
+                OnScoreTreshold?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }

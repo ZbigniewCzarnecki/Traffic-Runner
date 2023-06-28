@@ -14,6 +14,8 @@ public class GameUI : MonoBehaviour
         {
             GameManager.Instance.TogglePauseGame();
         });
+
+        UpdateScoreText();
     }
 
     private void Start()
@@ -22,7 +24,7 @@ public class GameUI : MonoBehaviour
         GameManager.Instance.OnGamePaused += Instance_OnGamePaused;
         GameManager.Instance.OnGameUnpaused += Instance_OnGameUnpaused;
 
-        //DataManager.Instance.data.playerData.OnScoreChanged += DataManager_OnScoreChanged;
+        Score.OnScoreChange += Score_OnScoreChange;
 
         Hide();
     }
@@ -33,7 +35,7 @@ public class GameUI : MonoBehaviour
         GameManager.Instance.OnGamePaused -= Instance_OnGamePaused;
         GameManager.Instance.OnGameUnpaused -= Instance_OnGameUnpaused;
 
-        //DataManager.Instance.data.playerData.OnScoreChanged -= DataManager_OnScoreChanged;
+        Score.OnScoreChange -= Score_OnScoreChange;
     }
 
     private void Instance_OnGamePaused(object sender, EventArgs e)
@@ -58,9 +60,14 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    private void DataManager_OnScoreChanged(int obj)
+    private void Score_OnScoreChange(object sender, EventArgs e)
     {
-        //_scoreText.text = DataManager.Instance.data.playerData.Score.ToString("000000");
+        UpdateScoreText();
+    }
+
+    private void UpdateScoreText()
+    {
+        _scoreText.text = GameData.Instance.Score.ToString("000000");
     }
 
     private void Show()
