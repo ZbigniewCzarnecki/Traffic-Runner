@@ -14,8 +14,6 @@ public class GameUI : MonoBehaviour
         {
             GameManager.Instance.TogglePauseGame();
         });
-
-        UpdateScoreText();
     }
 
     private void Start()
@@ -25,6 +23,8 @@ public class GameUI : MonoBehaviour
         GameManager.Instance.OnGameUnpaused += Instance_OnGameUnpaused;
 
         Score.OnScoreChange += Score_OnScoreChange;
+
+        UpdateScoreText();
 
         Hide();
     }

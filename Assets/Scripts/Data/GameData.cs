@@ -19,10 +19,10 @@ public class GameData : MonoBehaviour
 
         Instance = this;
 
-        DeserializeFromJson();
+        LoadGameData();
     }
 
-    public void SerializeToJson()
+    public void SaveGameData()
     {
         Data data = new()
         {
@@ -35,7 +35,7 @@ public class GameData : MonoBehaviour
         DataManager.SaveData(dataContent);
     }
 
-    public void DeserializeFromJson()
+    public void LoadGameData()
     {
         string dataContent = DataManager.LoadData();
 

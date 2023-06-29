@@ -98,11 +98,11 @@ public class GameManager : MonoBehaviour
     {
         _gameState = GameState.GameOver;
 
-        GameData.Instance.SerializeToJson();
-
         OnGameOver?.Invoke();
 
         OnStateChanged?.Invoke(this, EventArgs.Empty);
+
+        GameData.Instance.SaveGameData();
     }
 
     public bool IsWaitForInput()

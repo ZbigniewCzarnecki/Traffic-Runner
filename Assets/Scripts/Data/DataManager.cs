@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class DataManager
 {
-    private static readonly string FOLDER_PATH = Application.dataPath + "/SaveData/";
+    private static readonly string FOLDER_PATH = Application.persistentDataPath + "/SavedData/";
     private static readonly string FILE_NAME = "GameData.json";
 
     public static void SaveData(string fileContent)

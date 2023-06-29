@@ -11,11 +11,14 @@ public class PauseUI : MonoBehaviour
         _resumeButton.onClick.AddListener(() =>
         {
             GameManager.Instance.TogglePauseGame();
+
             Hide();
         });
 
         _quitButton.onClick.AddListener(() =>
         {
+            GameData.Instance.SaveGameData();
+
             SceneLoader.Load(SceneLoader.Scene.GameScene);
         });
     }
