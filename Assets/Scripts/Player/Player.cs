@@ -21,7 +21,10 @@ public class Player : MonoBehaviour
 
     private void PlayerMovement_OnHitForward(object sender, System.EventArgs e)
     {
-        HitObstacle();
+        if (GameManager.Instance.IsGamePlaying())
+        {
+            HitObstacle();
+        }
     }
 
     public void HitObstacle()

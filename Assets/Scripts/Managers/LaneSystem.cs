@@ -108,30 +108,3 @@ public class LaneSystem : MonoBehaviour
         return _lanePositionX[(int)_lane];
     }
 }
-
-
-#if UNITY_EDITOR
-[CustomEditor(typeof(LaneSystem))]
-internal class LaneSystemEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-
-        using (new EditorGUI.DisabledScope(true))
-        {
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Current Lane");
-            EditorGUILayout.Space();
-
-            using (new EditorGUI.IndentLevelScope())
-            {
-                var lane = ((LaneSystem)target).GetCurrentLaneString();
-                EditorGUILayout.LabelField("Lane", lane);
-                var positionX = ((LaneSystem)target).GetCurrentLanePositionX();
-                EditorGUILayout.LabelField("Position X", positionX.ToString());
-            }
-        }
-    }
-}
-#endif

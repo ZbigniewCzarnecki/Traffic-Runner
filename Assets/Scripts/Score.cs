@@ -33,6 +33,7 @@ public class Score : MonoBehaviour
                 GameData.Instance.BestScore = GameData.Instance.Score;
             }
 
+            //triggering an event every specified time (e.g. speeding up the player)
             if (GameData.Instance.Score % _scoreTreshold == 0)
             {
                 OnScoreTreshold?.Invoke(this, EventArgs.Empty);

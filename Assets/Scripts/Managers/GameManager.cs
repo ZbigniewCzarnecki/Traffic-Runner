@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
 
+    bool _unpausing;
+
     public enum GameState
     {
         WaitForInput,
@@ -25,6 +27,8 @@ public class GameManager : MonoBehaviour
     private GameState _gameState = GameState.WaitForInput;
 
     private float _countdownToStartTimer = 3f;
+    private readonly float _countdownToUnpauseTimerMax = 3f;
+    private float _countdownToUnpauseTimer;
 
     private bool _isGamePaused = false;
 
@@ -40,6 +44,11 @@ public class GameManager : MonoBehaviour
         Instance = this;
 
         Time.timeScale = 1f;
+    }
+
+    private void Start()
+    {
+        _countdownToUnpauseTimer = _countdownToUnpauseTimerMax;
     }
 
     private void Update()
@@ -66,7 +75,23 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case GameState.GamePlaying:
+                if (_unpausing)
+                {
+                    _countdownToUnpauseTimer -= Time.unscaledDeltaTime;
 
+                    if(_countdownToUnpauseTimer < 0)
+                    {
+                        _unpausing = false;
+
+                        Time.timeScale = 1;
+
+                        _countdownToUnpauseTimer = _countdownToUnpauseTimerMax;
+
+                        CountdownToUnpauseUI.Instance.Hide();
+
+                        OnGameUnpaused?.Invoke(this, EventArgs.Empty);
+                    }
+                }
                 break;
             case GameState.GameOver:
                 
@@ -88,9 +113,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Time.timeScale = 1;
+            _unpausing = true;
 
-            OnGameUnpaused?.Invoke(this, EventArgs.Empty);
+            CountdownToUnpauseUI.Instance.Show();
         }
     }
 
@@ -98,11 +123,15 @@ public class GameManager : MonoBehaviour
     {
         _gameState = GameState.GameOver;
 
+        GameData.Instance.AllCoins += GameData.Instance.Coins;
+
+        Debug.Log("CoinsJustSaved: " + GameData.Instance.AllCoins);
+
+        GameData.Instance.SaveGameData();
+
         OnGameOver?.Invoke();
 
         OnStateChanged?.Invoke(this, EventArgs.Empty);
-
-        GameData.Instance.SaveGameData();
     }
 
     public bool IsWaitForInput()
@@ -133,5 +162,10 @@ public class GameManager : MonoBehaviour
     public float GetCountdownToStartTimer()
     {
         return _countdownToStartTimer;
+    }
+
+    public float GetCountdownToUnpauseTimer()
+    {
+        return _countdownToUnpauseTimer;
     }
 }

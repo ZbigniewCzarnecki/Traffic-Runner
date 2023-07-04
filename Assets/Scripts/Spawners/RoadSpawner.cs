@@ -17,7 +17,8 @@ public class RoadSpawner : MonoBehaviour
     [SerializeField] private RoadPrefab[] _roadPrefab;
     private int _totalWeight;
 
-    [SerializeField] private int _roadPrefabsAmountToPool = 100;
+    [SerializeField] private int _roadToActivateOnStartAmount = 20;
+    [SerializeField] private int _roadToPoolAmount = 100;
 
     private readonly List<Transform> _pooledRoadPrefabs = new();
 
@@ -44,7 +45,7 @@ public class RoadSpawner : MonoBehaviour
 
         PoolRoadPrefabs();
 
-        ActivateRoadPrefabsFromPool();
+        ActivateRoadPrefabsFromPool(_roadToActivateOnStartAmount);
     }
 
     private void Update()
@@ -75,7 +76,7 @@ public class RoadSpawner : MonoBehaviour
     {
         Transform tmp;
 
-        for (int i = 0; i < _roadPrefabsAmountToPool; i++)
+        for (int i = 0; i < _roadToPoolAmount; i++)
         {
             tmp = GenerateRandomRoadPrefabBasedOnWeight();
             tmp.gameObject.SetActive(false);
@@ -105,7 +106,7 @@ public class RoadSpawner : MonoBehaviour
     {
         for (int i = 0; i < roadPrefabsAmount; i++)
         {
-            Transform roadPrefab = GetPooledPlatform();
+            Transform roadPrefab = GetPooledRoad();
 
             _spawnDistanceOffset += spawnOffset;
             Vector3 newSpawnPosition = new(0, 0, _spawnDistanceOffset);
@@ -118,9 +119,9 @@ public class RoadSpawner : MonoBehaviour
         }
     }
 
-    private Transform GetPooledPlatform()
+    private Transform GetPooledRoad()
     {
-        for (int i = 0; i < _pooledRoadPrefabs.Count - 1; i++)
+        for (int i = 0; i < _pooledRoadPrefabs.Count; i++)
         {
             if (!_pooledRoadPrefabs[i].gameObject.activeInHierarchy)
             {

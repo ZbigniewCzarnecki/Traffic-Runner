@@ -31,4 +31,12 @@ public static class DataManager
             return null;
         }
     }
+
+    public static void DeleteData()
+    {
+        if (File.Exists(FOLDER_PATH + FILE_NAME))
+        {
+            File.Delete(FOLDER_PATH + FILE_NAME);
+        }
+    }
 }

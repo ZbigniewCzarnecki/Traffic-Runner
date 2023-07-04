@@ -6,6 +6,8 @@ public class PauseUI : MonoBehaviour
     [SerializeField] private Button _resumeButton;
     [SerializeField] private Button _quitButton;
 
+    [SerializeField] private GameObject _quitUI;
+
     private void Awake()
     {
         _resumeButton.onClick.AddListener(() =>
@@ -17,9 +19,7 @@ public class PauseUI : MonoBehaviour
 
         _quitButton.onClick.AddListener(() =>
         {
-            GameData.Instance.SaveGameData();
-
-            SceneLoader.Load(SceneLoader.Scene.GameScene);
+            _quitUI.SetActive(true);
         });
     }
 

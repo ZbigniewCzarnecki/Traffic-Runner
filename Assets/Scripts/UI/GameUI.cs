@@ -5,11 +5,23 @@ using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
+    public static GameUI Instance { get; private set; }
+
     [SerializeField] private Button _pauseButton;
     [SerializeField] private TextMeshProUGUI _scoreText;
+    [SerializeField] private TextMeshProUGUI _coinText;
 
     private void Awake()
     {
+        if(Instance != null)
+        {
+            Debug.LogError("There is more than one GameUI " + transform + " - " + Instance);
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
         _pauseButton.onClick.AddListener(() =>
         {
             GameManager.Instance.TogglePauseGame();
@@ -25,6 +37,7 @@ public class GameUI : MonoBehaviour
         Score.OnScoreChange += Score_OnScoreChange;
 
         UpdateScoreText();
+        UpdateCoinText();
 
         Hide();
     }
@@ -68,6 +81,11 @@ public class GameUI : MonoBehaviour
     private void UpdateScoreText()
     {
         _scoreText.text = GameData.Instance.Score.ToString("000000");
+    }
+
+    public void UpdateCoinText()
+    {
+        _coinText.text = GameData.Instance.Coins.ToString("0");
     }
 
     private void Show()

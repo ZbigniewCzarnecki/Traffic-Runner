@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class GameData : MonoBehaviour
@@ -5,8 +6,9 @@ public class GameData : MonoBehaviour
     public static GameData Instance { get; private set; }
 
     public int Coins { get; set; }
-    public int Score { get; set;}
-    public int BestScore{ get; set; }
+    public int AllCoins { get; set; }
+    public int Score { get; set; }
+    public int BestScore { get; set; }
 
     private void Awake()
     {
@@ -26,7 +28,7 @@ public class GameData : MonoBehaviour
     {
         Data data = new()
         {
-            coins = Coins,
+            allCoins = AllCoins,
             bestScore = BestScore,
         };
 
@@ -43,14 +45,34 @@ public class GameData : MonoBehaviour
         {
             Data data = JsonUtility.FromJson<Data>(dataContent);
 
-            Coins = data.coins;
+            AllCoins = data.allCoins;
             BestScore = data.bestScore;
         }
     }
 
+    public void DeleteGameData()
+    {
+        DataManager.DeleteData();
+    }
+
     public class Data
     {
-        public int coins;
+        public int allCoins;
         public int bestScore;
     }
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(GameData))]
+internal class GameDataEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        var resetGameData = (GameData)target;
+
+        if (GUILayout.Button("Reset Game Data")) resetGameData.DeleteGameData();
+    }
+}
+#endif

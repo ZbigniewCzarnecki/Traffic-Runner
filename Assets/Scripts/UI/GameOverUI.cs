@@ -9,6 +9,7 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private Button _menuButton;
 
     [SerializeField] private TextMeshProUGUI _scoreText;
+    [SerializeField] private TextMeshProUGUI _coinText;
 
     private void Awake()
     {
@@ -32,6 +33,7 @@ public class GameOverUI : MonoBehaviour
             Show();
 
             _scoreText.text = "Score: " + GameData.Instance.Score.ToString("000000");
+            _coinText.text = "Coins: " + GameData.Instance.Coins.ToString("0");
         }
         else
         {

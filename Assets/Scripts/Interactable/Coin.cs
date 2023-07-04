@@ -1,12 +1,30 @@
+using System.Collections;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+    [SerializeField] private LayerMask _playerLayer;
+    [SerializeField] private SphereCollider _sphereCollider;
+    [SerializeField] private MeshRenderer _coinMesh;
+
     private void OnTriggerEnter(Collider other)
     {
-        other.TryGetComponent<PlayerMovement>(out PlayerMovement _);
+        if ((_playerLayer.value & (1 << other.transform.gameObject.layer)) > 0)
         {
-            Destroy(gameObject);
+            GameData.Instance.Coins++;
+            GameUI.Instance.UpdateCoinText();
+            StartCoroutine(nameof(CoinBehaviour));
         }
+    }
+
+    private IEnumerator CoinBehaviour() {
+        _sphereCollider.enabled = false;
+        _coinMesh.enabled = false;
+
+        float waitForActivateTime = 1f;
+        yield return new WaitForSeconds(waitForActivateTime);
+
+        _sphereCollider.enabled = true;
+        _coinMesh.enabled = true;
     }
 }

@@ -22,6 +22,7 @@ public class PlayerMovement : PlayerBase
 
     private bool _abbleToMove;
     private bool _isJumping;
+    private bool _isSliding;
 
     private void Start()
     {
@@ -141,7 +142,15 @@ public class PlayerMovement : PlayerBase
             FallDown();
         }
 
-        Slide();
+        if (!_isSliding)
+        {
+            StartCoroutine(nameof(Slide));
+        }
+        else
+        {
+            StopAllCoroutines();
+            StartCoroutine(nameof(Slide));
+        }
     }
 
     private void Score_OnScoreTreshold(object sender, EventArgs e)
@@ -182,21 +191,24 @@ public class PlayerMovement : PlayerBase
             yield return null;
         }
 
-        _rb.MovePosition(new Vector3(targetPosition.x, _rb.position.y, _rb.position.z));
+        //_rb.MovePosition(new Vector3(targetPosition.x, _rb.position.y, _rb.position.z));
+        //_rb.transform.position = new Vector3(targetPosition.x, _rb.position.y, _rb.position.z);
     }
 
-    private void Slide()
+    private IEnumerator Slide()
     {
         _collider.height = 1f;
         _collider.center = new Vector3(0f, .5f, 0f);
 
-        Invoke(nameof(ResetSlide), 1f);
+        _isSliding = true;
 
         OnSlide?.Invoke(this, EventArgs.Empty);
-    }
 
-    private void ResetSlide()
-    {
+        float timeOfSlideAnimation = 1f;
+        yield return new WaitForSeconds(timeOfSlideAnimation);
+
+        _isSliding = false;
+
         _collider.height = 1.8f;
         _collider.center = new Vector3(0f, 0.9f, 0f);
     }
