@@ -13,12 +13,14 @@ public class PauseUI : MonoBehaviour
         _resumeButton.onClick.AddListener(() =>
         {
             GameManager.Instance.TogglePauseGame();
+            AudioManager.Instance.PlayClickSound();
 
             Hide();
         });
 
         _quitButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance.PlayClickSound();
             _quitUI.SetActive(true);
         });
     }

@@ -10,15 +10,13 @@ public class QuitUI : MonoBehaviour
     {
         _confirmButton.onClick.AddListener(() =>
         {
-            //I'm not sure if i want to collect all coins and score while leaving run
-            //GameData.Instance.AllCoins += GameData.Instance.Coins;
-            //GameData.Instance.SaveGameData();
-
+            AudioManager.Instance.PlayClickSound();
             SceneLoader.Load(SceneLoader.Scene.GameScene);
         });
 
         _denyButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance.PlayClickSound();
             gameObject.SetActive(false);
         });
     }

@@ -10,6 +10,9 @@ public class CountdownToStartUI : MonoBehaviour
 
     private int _previousCountdownNumber;
 
+    [Header("Feedback")]
+    [SerializeField] private AudioClip _countdownAudioClip;
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -31,6 +34,7 @@ public class CountdownToStartUI : MonoBehaviour
         {
             _previousCountdownNumber = countdownNumber;
             _animator.SetTrigger(NUMBER_POPUP);
+            AudioManager.Instance.PlaySound(_countdownAudioClip);
         }
     }
 

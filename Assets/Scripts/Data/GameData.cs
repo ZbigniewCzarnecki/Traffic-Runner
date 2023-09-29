@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -5,10 +6,13 @@ public class GameData : MonoBehaviour
 {
     public static GameData Instance { get; private set; }
 
-    public int Coins { get; set; }
-    public int AllCoins { get; set; }
-    public int Score { get; set; }
-    public int BestScore { get; set; }
+    public int InGameCoins { get; set; }
+    public int InGameScore { get; set; }
+
+    private int _coins;
+    private int _bestScore;
+    private int _lastActiveSkinIndex;
+    private List<int> _purchasedSkinsIndexList = new();
 
     private void Awake()
     {
@@ -24,12 +28,83 @@ public class GameData : MonoBehaviour
         LoadGameData();
     }
 
+    public void IncreseCoins(int coinsToIncrease = 1)
+    {
+        _coins += coinsToIncrease;
+    }
+
+    public void DecreaseCoins(int coinsToDecrease)
+    {
+        _coins -= coinsToDecrease;
+    }
+
+    public void SetCoins(int value)
+    {
+        _coins = value;
+    }
+
+    public int GetCoins()
+    {
+        return _coins;
+    }
+
+    public void IncreseBestScore(int score = 1)
+    {
+        _bestScore += score;
+    }
+
+    public void SetBestScore(int value)
+    {
+        _bestScore = value;
+    }
+
+    public int GetBestScore()
+    {
+        return _bestScore;
+    }
+
+    public void SetLastActiveSkinIndex(int value)
+    {
+        _lastActiveSkinIndex = value;
+    }
+
+    public int GetLastActiveSkinIndex()
+    {
+        return _lastActiveSkinIndex;
+    }
+
+    public void AddNewPurchasedSkinToAList(int skinIdex)
+    {
+        _purchasedSkinsIndexList.Add(skinIdex);
+    }
+
+    public void SetPurchasedSkinList(List<int> activeSkinsIndexList)
+    {
+        _purchasedSkinsIndexList = activeSkinsIndexList;
+    }
+    public List<int> GetPurchasedSkinList()
+    {
+        return _purchasedSkinsIndexList;
+    }
+
+    public void UpdateDataBeforeSaving()
+    {
+        IncreseCoins(InGameCoins);
+
+        if(GetBestScore() < InGameScore)
+        {
+            SetBestScore(InGameScore);
+        }
+    }
+
     public void SaveGameData()
     {
         Data data = new()
         {
-            allCoins = AllCoins,
-            bestScore = BestScore,
+            coins = GetCoins(),
+            bestScore = GetBestScore(),
+            lastActiveSkinIndex = GetLastActiveSkinIndex(),
+            skinsIndexList = GetPurchasedSkinList(),
         };
 
         string dataContent = JsonUtility.ToJson(data, true);
@@ -45,8 +120,10 @@ public class GameData : MonoBehaviour
         {
             Data data = JsonUtility.FromJson<Data>(dataContent);
 
-            AllCoins = data.allCoins;
-            BestScore = data.bestScore;
+            SetCoins(data.coins);
+            SetBestScore(data.bestScore);
+            SetLastActiveSkinIndex(data.lastActiveSkinIndex);
+            SetPurchasedSkinList(data.skinsIndexList);
         }
     }
 
@@ -57,8 +134,10 @@ public class GameData : MonoBehaviour
 
     public class Data
     {
-        public int allCoins;
+        public int coins;
         public int bestScore;
+        public int lastActiveSkinIndex;
+        public List<int> skinsIndexList;
     }
 }
 
@@ -70,9 +149,10 @@ internal class GameDataEditor : Editor
     {
         base.OnInspectorGUI();
 
-        var resetGameData = (GameData)target;
+        var gameData = (GameData)target;
 
-        if (GUILayout.Button("Reset Game Data")) resetGameData.DeleteGameData();
+        if (GUILayout.Button("Reset Game Data")) gameData.DeleteGameData();
+        if (GUILayout.Button("Add 1000 Coins")) gameData.IncreseCoins(1000);
     }
 }
 #endif

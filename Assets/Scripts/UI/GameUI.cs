@@ -24,6 +24,7 @@ public class GameUI : MonoBehaviour
 
         _pauseButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance.PlayClickSound();
             GameManager.Instance.TogglePauseGame();
         });
     }
@@ -80,12 +81,12 @@ public class GameUI : MonoBehaviour
 
     private void UpdateScoreText()
     {
-        _scoreText.text = GameData.Instance.Score.ToString("000000");
+        _scoreText.text = GameData.Instance.InGameScore.ToString("000000");
     }
 
     public void UpdateCoinText()
     {
-        _coinText.text = GameData.Instance.Coins.ToString("0");
+        _coinText.text = GameData.Instance.InGameCoins.ToString("0000");
     }
 
     private void Show()

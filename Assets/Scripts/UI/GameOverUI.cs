@@ -15,6 +15,7 @@ public class GameOverUI : MonoBehaviour
     {
         _playButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance.PlayClickSound();
             SceneLoader.Load(SceneLoader.Scene.GameScene);
         });
     }
@@ -32,8 +33,8 @@ public class GameOverUI : MonoBehaviour
         {
             Show();
 
-            _scoreText.text = "Score: " + GameData.Instance.Score.ToString("000000");
-            _coinText.text = "Coins: " + GameData.Instance.Coins.ToString("0");
+            _scoreText.text = "Score: " + GameData.Instance.InGameScore.ToString("000000");
+            _coinText.text = "Coins: " + GameData.Instance.InGameCoins.ToString("0000");
         }
         else
         {

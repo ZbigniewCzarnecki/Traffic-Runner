@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour
 
     bool _unpausing;
 
+    [Header("Feedback")]
+    [SerializeField] private AudioClip _gameStartSound;
+    [SerializeField] private AudioClip _gameEndSound;
+
     public enum GameState
     {
         WaitForInput,
@@ -71,6 +75,9 @@ public class GameManager : MonoBehaviour
                 if (_countdownToStartTimer < 0)
                 {
                     _gameState = GameState.GamePlaying;
+
+                    AudioManager.Instance.PlaySound(_gameStartSound);
+
                     OnStateChanged?.Invoke(this, EventArgs.Empty);
                 }
                 break;
@@ -79,15 +86,19 @@ public class GameManager : MonoBehaviour
                 {
                     _countdownToUnpauseTimer -= Time.unscaledDeltaTime;
 
-                    if(_countdownToUnpauseTimer < 0)
+                    if(_countdownToUnpauseTimer <= 0)
                     {
                         _unpausing = false;
+
+                        _isGamePaused = false;
 
                         Time.timeScale = 1;
 
                         _countdownToUnpauseTimer = _countdownToUnpauseTimerMax;
 
                         CountdownToUnpauseUI.Instance.Hide();
+
+                        AudioManager.Instance.PlaySound(_gameStartSound);
 
                         OnGameUnpaused?.Invoke(this, EventArgs.Empty);
                     }
@@ -123,10 +134,9 @@ public class GameManager : MonoBehaviour
     {
         _gameState = GameState.GameOver;
 
-        GameData.Instance.AllCoins += GameData.Instance.Coins;
+        AudioManager.Instance.PlaySound(_gameEndSound);
 
-        Debug.Log("CoinsJustSaved: " + GameData.Instance.AllCoins);
-
+        GameData.Instance.UpdateDataBeforeSaving();
         GameData.Instance.SaveGameData();
 
         OnGameOver?.Invoke();

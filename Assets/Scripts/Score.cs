@@ -24,17 +24,12 @@ public class Score : MonoBehaviour
         if (_scoreTimer >= _scoreTimerMax)
         {
             _scoreTimer = 0;
-            GameData.Instance.Score += _scoreToAdd;
+            GameData.Instance.InGameScore += _scoreToAdd;
 
             OnScoreChange?.Invoke(this, EventArgs.Empty);
 
-            if (GameData.Instance.BestScore < GameData.Instance.Score)
-            {
-                GameData.Instance.BestScore = GameData.Instance.Score;
-            }
-
             //triggering an event every specified time (e.g. speeding up the player)
-            if (GameData.Instance.Score % _scoreTreshold == 0)
+            if (GameData.Instance.InGameScore % _scoreTreshold == 0)
             {
                 OnScoreTreshold?.Invoke(this, EventArgs.Empty);
             }

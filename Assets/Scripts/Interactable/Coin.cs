@@ -7,12 +7,22 @@ public class Coin : MonoBehaviour
     [SerializeField] private SphereCollider _sphereCollider;
     [SerializeField] private MeshRenderer _coinMesh;
 
+    [Header("Feedback")]
+    [SerializeField] private AudioClip _pickUpSound;
+
     private void OnTriggerEnter(Collider other)
     {
         if ((_playerLayer.value & (1 << other.transform.gameObject.layer)) > 0)
         {
-            GameData.Instance.Coins++;
+            GameData.Instance.InGameCoins++;
+
             GameUI.Instance.UpdateCoinText();
+
+            if(_pickUpSound != null)
+            {
+                AudioManager.Instance.PlaySound(_pickUpSound);
+            }
+
             StartCoroutine(nameof(CoinBehaviour));
         }
     }

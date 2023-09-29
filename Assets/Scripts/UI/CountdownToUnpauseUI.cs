@@ -12,6 +12,9 @@ public class CountdownToUnpauseUI : MonoBehaviour
 
     private int _previousCountdownNumber;
 
+    [Header("Feedback")]
+    [SerializeField] private AudioClip _countdownAudioClip;
+
     private void Awake()
     {
         if(Instance != null)
@@ -40,6 +43,7 @@ public class CountdownToUnpauseUI : MonoBehaviour
         {
             _previousCountdownNumber = countdownNumber;
             _animator.SetTrigger(NUMBER_POPUP);
+            AudioManager.Instance.PlaySound(_countdownAudioClip);
         }
     }
 

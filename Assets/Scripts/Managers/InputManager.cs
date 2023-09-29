@@ -20,6 +20,7 @@ public class InputManager : MonoBehaviour
     private Vector2 _pointerUpPosition;
 
     private bool _isSwiping;
+    private bool _isGamePaused;
 
     private void Awake()
     {
@@ -36,6 +37,21 @@ public class InputManager : MonoBehaviour
         _input.Enable();
     }
 
+    private void Start()
+    {
+        GameManager.Instance.OnGamePaused += GameManager_OnGamePaused;
+        GameManager.Instance.OnGameUnpaused += GameManager_OnGameUnpaused;
+    }
+    private void GameManager_OnGamePaused(object sender, EventArgs e)
+    {
+        _isGamePaused = true;
+    }
+
+    private void GameManager_OnGameUnpaused(object sender, EventArgs e)
+    {
+        _isGamePaused = false;
+    }
+
     private void OnDestroy()
     {
         _input.Dispose();
@@ -43,6 +59,11 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+        if(_isGamePaused)
+        {
+            return;
+        }
+
         if (_input.Touch.Press.WasPressedThisFrame())
         {
             _pointerDownPosition = _input.Touch.PointerPosition.ReadValue<Vector2>();

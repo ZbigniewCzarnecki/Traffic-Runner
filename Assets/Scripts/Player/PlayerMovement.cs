@@ -38,6 +38,8 @@ public class PlayerMovement : PlayerBase
 
     private void OnDestroy()
     {
+        GameManager.Instance.OnStateChanged -= GameManager_OnStateChanged;
+
         InputManager.Instance.OnSwipeLeft -= InputManager_OnSwipeLeft;
         InputManager.Instance.OnSwipeRight -= InputManager_OnSwipeRight;
         InputManager.Instance.OnSwipeUp -= InputManager_OnSwipeUp;
@@ -190,9 +192,6 @@ public class PlayerMovement : PlayerBase
             _rb.MovePosition(new Vector3(newPosition.x, _rb.position.y, _rb.position.z));
             yield return null;
         }
-
-        //_rb.MovePosition(new Vector3(targetPosition.x, _rb.position.y, _rb.position.z));
-        //_rb.transform.position = new Vector3(targetPosition.x, _rb.position.y, _rb.position.z);
     }
 
     private IEnumerator Slide()
@@ -209,8 +208,8 @@ public class PlayerMovement : PlayerBase
 
         _isSliding = false;
 
-        _collider.height = 1.8f;
-        _collider.center = new Vector3(0f, 0.9f, 0f);
+        _collider.height = 2.7f;
+        _collider.center = new Vector3(0f, 1.35f, 0f);
     }
 
     private void Jump()
@@ -232,7 +231,6 @@ public class PlayerMovement : PlayerBase
 
     private void FallDown()
     {
-
         _rb.AddForce(_jumpForce * Vector3.down, ForceMode.Impulse);
     }
 

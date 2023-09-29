@@ -12,8 +12,8 @@ public class PlayerAnimations : MonoBehaviour
 
     private void Awake()
     {
-        _playerMovement = GetComponent<PlayerMovement>();
-        _animator = GetComponentInChildren<Animator>();
+        _playerMovement = GetComponentInParent<PlayerMovement>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -21,6 +21,13 @@ public class PlayerAnimations : MonoBehaviour
         GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
 
         _playerMovement.OnSlide += Player_OnSlide;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnStateChanged -= GameManager_OnStateChanged;
+
+        _playerMovement.OnSlide -= Player_OnSlide;
     }
 
     private void GameManager_OnStateChanged(object sender, System.EventArgs e)
