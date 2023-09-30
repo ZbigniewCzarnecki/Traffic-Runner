@@ -1,12 +1,9 @@
 using UnityEngine;
 
-public class Trap : MonoBehaviour
+public class Trap : MonoBehaviour, IInteractable
 {
-    private void OnTriggerEnter(Collider other)
+    public void Interact(Player player)
     {
-        other.TryGetComponent<Player>(out Player player);
-        {
-            player.HitObstacle();
-        }
+        player.HitObstacle();
     }
 }

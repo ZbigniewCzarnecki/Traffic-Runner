@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _sfxSource;
 
     [SerializeField] private AudioClip _clickSound;
+    [SerializeField] private AudioClip _pickUpCoinSound;
 
     private void Awake()
     {
@@ -24,6 +25,11 @@ public class AudioManager : MonoBehaviour
     public void PlaySound(AudioClip clip, float volume = 1f)
     {
         _sfxSource.PlayOneShot(clip, volume);
+    }
+    
+    public void PlayPickUpCoinSound(float volume = 1f)
+    {
+        _sfxSource.PlayOneShot(_pickUpCoinSound, volume);
     }
 
     public void PlayClickSound()

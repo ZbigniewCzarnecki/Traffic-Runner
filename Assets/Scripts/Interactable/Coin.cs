@@ -1,33 +1,19 @@
 using System.Collections;
 using UnityEngine;
 
-public class Coin : MonoBehaviour
+public class Coin : MonoBehaviour, IInteractable
 {
-    [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private SphereCollider _sphereCollider;
     [SerializeField] private MeshRenderer _coinMesh;
 
-    [Header("Feedback")]
-    [SerializeField] private AudioClip _pickUpSound;
-
-    private void OnTriggerEnter(Collider other)
+    public void Interact(Player player)
     {
-        if ((_playerLayer.value & (1 << other.transform.gameObject.layer)) > 0)
-        {
-            GameData.Instance.InGameCoins++;
-
-            GameUI.Instance.UpdateCoinText();
-
-            if(_pickUpSound != null)
-            {
-                AudioManager.Instance.PlaySound(_pickUpSound);
-            }
-
-            StartCoroutine(nameof(CoinBehaviour));
-        }
+        player.PickUpCoin();
+        StartCoroutine(nameof(CoinBehaviour));
     }
 
-    private IEnumerator CoinBehaviour() {
+    private IEnumerator CoinBehaviour()
+    {
         _sphereCollider.enabled = false;
         _coinMesh.enabled = false;
 
