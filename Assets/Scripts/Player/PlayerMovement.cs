@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerMovement : PlayerBase
 {
     public event EventHandler OnSlide;
-    public event EventHandler OnHitForward;
 
     [Header("Player")]
     [SerializeField] private float _speed = 20f;
@@ -52,7 +51,11 @@ public class PlayerMovement : PlayerBase
     {
         if (RaycastForward())
         {
-            OnHitForward?.Invoke(this, EventArgs.Empty);
+            if (GameManager.Instance.IsGamePlaying)
+            {
+                ParticleManager.Instance.InstantiateHitObstacleParticle(transform.position);
+                GameManager.Instance.GameOver();
+            }
         }
 
         if (!_isJumping && _rb.velocity.y > _walkUpSpeedLimit)
@@ -83,7 +86,7 @@ public class PlayerMovement : PlayerBase
 
     private void GameManager_OnStateChanged(object sender, EventArgs e)
     {
-        if (GameManager.Instance.IsGamePlaying())
+        if (GameManager.Instance.IsGamePlaying)
         {
             _abbleToMove = true;
         }

@@ -24,9 +24,14 @@ public class GameUI : MonoBehaviour
 
         _pauseButton.onClick.AddListener(() =>
         {
-            AudioManager.Instance.PlayClickSound();
-            GameManager.Instance.TogglePauseGame();
+            InitializePauseButton();
         });
+    }
+
+    private static void InitializePauseButton()
+    {
+        AudioManager.Instance.PlayClickSound();
+        GameManager.Instance.TogglePauseGame();
     }
 
     private void Start()
@@ -64,7 +69,7 @@ public class GameUI : MonoBehaviour
 
     private void GameManager_OnStateChanged(object sender, EventArgs e)
     {
-        if (GameManager.Instance.IsGamePlaying())
+        if (GameManager.Instance.IsGamePlaying)
         {
             Show();
         }

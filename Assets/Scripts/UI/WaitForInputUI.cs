@@ -5,18 +5,23 @@ using UnityEngine.UI;
 public class WaitForInputUI : MonoBehaviour
 {
     [SerializeField] private ShopUI _shopUI;
-    [SerializeField] private Button _shopButton;
+    [SerializeField] private Button _openShopButton;
 
     [SerializeField] private TextMeshProUGUI _bestScoreText;
     [SerializeField] private TextMeshProUGUI _allCoinsText;
 
     private void Awake()
     {
-        _shopButton.onClick.AddListener(() =>
+        _openShopButton.onClick.AddListener(() =>
         {
-            AudioManager.Instance.PlayClickSound();
-            _shopUI.Show();
+            InitializeOpenShopButton();
         });
+    }
+
+    private void InitializeOpenShopButton()
+    {
+        AudioManager.Instance.PlayClickSound();
+        _shopUI.Show();
     }
 
     private void Start()
@@ -27,7 +32,6 @@ public class WaitForInputUI : MonoBehaviour
         UpdateUI();
     }
 
-
     private void OnDestroy()
     {
         GameManager.Instance.OnStateChanged -= GameManager_OnStateChanged;
@@ -36,7 +40,7 @@ public class WaitForInputUI : MonoBehaviour
 
     private void GameManager_OnStateChanged(object sender, System.EventArgs e)
     {
-        if (GameManager.Instance.IsCountdownToStart())
+        if (GameManager.Instance.IsCountdownToStart)
         {
             Hide();
         }

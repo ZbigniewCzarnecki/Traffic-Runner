@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class GameData : MonoBehaviour
@@ -131,28 +130,4 @@ public class GameData : MonoBehaviour
     {
         DataManager.DeleteData();
     }
-
-    public class Data
-    {
-        public int coins;
-        public int bestScore;
-        public int lastActiveSkinIndex;
-        public List<int> skinsIndexList;
-    }
 }
-
-#if UNITY_EDITOR
-[CustomEditor(typeof(GameData))]
-internal class GameDataEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-
-        var gameData = (GameData)target;
-
-        if (GUILayout.Button("Reset Game Data")) gameData.DeleteGameData();
-        if (GUILayout.Button("Add 1000 Coins")) gameData.IncreseCoins(1000);
-    }
-}
-#endif

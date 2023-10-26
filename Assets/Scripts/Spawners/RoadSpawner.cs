@@ -50,7 +50,7 @@ public class RoadSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (!GameManager.Instance.IsGamePlaying())
+        if (!GameManager.Instance.IsGamePlaying)
         {
             return;
         }

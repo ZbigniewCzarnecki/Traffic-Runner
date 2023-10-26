@@ -27,7 +27,7 @@ public class CountdownToStartUI : MonoBehaviour
 
     private void Update()
     {
-        int countdownNumber = Mathf.CeilToInt(GameManager.Instance.GetCountdownToStartTimer());
+        int countdownNumber = Mathf.CeilToInt(GameManager.Instance.GetCountdownToStartTimer);
         _countdownText.text = countdownNumber.ToString("0");
 
         if (_previousCountdownNumber != countdownNumber)
@@ -40,7 +40,7 @@ public class CountdownToStartUI : MonoBehaviour
 
     private void GameManager_OnStateChanged(object sender, System.EventArgs e)
     {
-        if (GameManager.Instance.IsCountdownToStart())
+        if (GameManager.Instance.IsCountdownToStart)
         {
             Show();
         }

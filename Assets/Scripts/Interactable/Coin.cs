@@ -6,9 +6,14 @@ public class Coin : MonoBehaviour, IInteractable
     [SerializeField] private SphereCollider _sphereCollider;
     [SerializeField] private MeshRenderer _coinMesh;
 
-    public void Interact(Player player)
+    public void Interact(PlayerInteractions player)
     {
-        player.PickUpCoin();
+        GameData.Instance.InGameCoins++;
+        GameUI.Instance.UpdateCoinText();
+
+        AudioManager.Instance.PlayPickUpCoinSound();
+        ParticleManager.Instance.InstantiateCollectCoinParticle(player.transform.position);
+
         StartCoroutine(nameof(CoinBehaviour));
     }
 

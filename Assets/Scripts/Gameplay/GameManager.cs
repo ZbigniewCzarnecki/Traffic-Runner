@@ -36,6 +36,14 @@ public class GameManager : MonoBehaviour
 
     private bool _isGamePaused = false;
 
+    //Getters
+    public bool IsCountdownToStart => _gameState == GameState.CountdownToStart;
+    public bool IsGamePlaying => _gameState == GameState.GamePlaying;
+    public bool IsGameOver => _gameState == GameState.GameOver;
+    public bool IsGamePaused => _isGamePaused;
+    public float GetCountdownToStartTimer => _countdownToStartTimer;
+    public float GetCountdownToUnpauseTimer => _countdownToUnpauseTimer;
+
     private void Awake()
     {
         if (Instance != null)
@@ -86,7 +94,7 @@ public class GameManager : MonoBehaviour
                 {
                     _countdownToUnpauseTimer -= Time.unscaledDeltaTime;
 
-                    if(_countdownToUnpauseTimer <= 0)
+                    if (_countdownToUnpauseTimer <= 0)
                     {
                         _unpausing = false;
 
@@ -105,7 +113,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case GameState.GameOver:
-                
+
                 break;
             default:
                 break;
@@ -142,40 +150,5 @@ public class GameManager : MonoBehaviour
         OnGameOver?.Invoke();
 
         OnStateChanged?.Invoke(this, EventArgs.Empty);
-    }
-
-    public bool IsWaitForInput()
-    {
-        return _gameState == GameState.WaitForInput;
-    }
-
-    public bool IsCountdownToStart()
-    {
-        return _gameState == GameState.CountdownToStart;
-    }
-
-    public bool IsGamePlaying()
-    {
-        return _gameState == GameState.GamePlaying;
-    }
-
-    public bool IsGameOver()
-    {
-        return _gameState == GameState.GameOver;
-    }
-
-    public bool IsGamePaused()
-    {
-        return _isGamePaused;
-    }
-
-    public float GetCountdownToStartTimer()
-    {
-        return _countdownToStartTimer;
-    }
-
-    public float GetCountdownToUnpauseTimer()
-    {
-        return _countdownToUnpauseTimer;
     }
 }

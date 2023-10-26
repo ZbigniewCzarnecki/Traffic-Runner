@@ -10,14 +10,24 @@ public class QuitUI : MonoBehaviour
     {
         _confirmButton.onClick.AddListener(() =>
         {
-            AudioManager.Instance.PlayClickSound();
-            SceneLoader.Load(SceneLoader.Scene.GameScene);
+            InitializeConfirmButton();
         });
 
         _denyButton.onClick.AddListener(() =>
         {
-            AudioManager.Instance.PlayClickSound();
-            gameObject.SetActive(false);
+            InitializeDenyButton();
         });
+    }
+
+    private static void InitializeConfirmButton()
+    {
+        AudioManager.Instance.PlayClickSound();
+        SceneLoader.Load(SceneLoader.Scene.GameScene);
+    }
+
+    private void InitializeDenyButton()
+    {
+        AudioManager.Instance.PlayClickSound();
+        gameObject.SetActive(false);
     }
 }

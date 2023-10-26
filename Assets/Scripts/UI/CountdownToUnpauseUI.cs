@@ -36,7 +36,7 @@ public class CountdownToUnpauseUI : MonoBehaviour
 
     private void Update()
     {
-        int countdownNumber = Mathf.CeilToInt(GameManager.Instance.GetCountdownToUnpauseTimer());
+        int countdownNumber = Mathf.CeilToInt(GameManager.Instance.GetCountdownToUnpauseTimer);
         _countdownText.text = countdownNumber.ToString("0");
 
         if (_previousCountdownNumber != countdownNumber)

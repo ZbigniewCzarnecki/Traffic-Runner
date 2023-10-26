@@ -10,7 +10,7 @@ public class FollowPlayer : MonoBehaviour
 
         if(targetPosition.x != 0)
         {
-            targetPosition.x /= 2;
+            targetPosition.x *= 0.5f;
         }
 
         transform.position = targetPosition;

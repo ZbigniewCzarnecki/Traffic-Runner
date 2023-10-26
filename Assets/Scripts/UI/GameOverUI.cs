@@ -15,9 +15,14 @@ public class GameOverUI : MonoBehaviour
     {
         _playButton.onClick.AddListener(() =>
         {
-            AudioManager.Instance.PlayClickSound();
-            SceneLoader.Load(SceneLoader.Scene.GameScene);
+            InitializePlayButton();
         });
+    }
+
+    private static void InitializePlayButton()
+    {
+        AudioManager.Instance.PlayClickSound();
+        SceneLoader.Load(SceneLoader.Scene.GameScene);
     }
 
     private void Start()
@@ -29,7 +34,7 @@ public class GameOverUI : MonoBehaviour
 
     private void GameManager_OnStateChanged(object sender, EventArgs e)
     {
-        if (GameManager.Instance.IsGameOver())
+        if (GameManager.Instance.IsGameOver)
         {
             Show();
 

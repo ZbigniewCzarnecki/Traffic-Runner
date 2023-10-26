@@ -32,12 +32,12 @@ public class PlayerAnimations : MonoBehaviour
 
     private void GameManager_OnStateChanged(object sender, System.EventArgs e)
     {
-        if (GameManager.Instance.IsGamePlaying())
+        if (GameManager.Instance.IsGamePlaying)
         {
             _animator.SetTrigger(RUN);
         }
 
-        if (GameManager.Instance.IsGameOver())
+        if (GameManager.Instance.IsGameOver)
         {
             _animator.SetTrigger(IDLE);
         }

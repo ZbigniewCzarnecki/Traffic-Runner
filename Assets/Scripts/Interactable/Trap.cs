@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour, IInteractable
 {
-    public void Interact(Player player)
+    public void Interact(PlayerInteractions player)
     {
-        player.HitObstacle();
+        ParticleManager.Instance.InstantiateHitObstacleParticle(player.transform.position);
+        GameManager.Instance.GameOver();
     }
 }

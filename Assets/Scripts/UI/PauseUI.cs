@@ -12,17 +12,27 @@ public class PauseUI : MonoBehaviour
     {
         _resumeButton.onClick.AddListener(() =>
         {
-            GameManager.Instance.TogglePauseGame();
-            AudioManager.Instance.PlayClickSound();
-
-            Hide();
+            InitializeResumeButton();
         });
 
         _quitButton.onClick.AddListener(() =>
         {
-            AudioManager.Instance.PlayClickSound();
-            _quitUI.SetActive(true);
+            InitializeQuitButton();
         });
+    }
+
+    private void InitializeResumeButton()
+    {
+        GameManager.Instance.TogglePauseGame();
+        AudioManager.Instance.PlayClickSound();
+
+        Hide();
+    }
+
+    private void InitializeQuitButton()
+    {
+        AudioManager.Instance.PlayClickSound();
+        _quitUI.SetActive(true);
     }
 
     private void Start()

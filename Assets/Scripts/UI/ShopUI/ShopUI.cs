@@ -33,10 +33,15 @@ public class ShopUI : MonoBehaviour
 
         _closeShopButton.onClick.AddListener(() =>
         {
-            AudioManager.Instance.PlayClickSound();
-            OnShopCloseAction?.Invoke();
-            Hide();
+            InitializeCloseShopButton();
         });
+    }
+
+    private void InitializeCloseShopButton()
+    {
+        AudioManager.Instance.PlayClickSound();
+        OnShopCloseAction?.Invoke();
+        Hide();
     }
 
     private void Start()
@@ -70,32 +75,37 @@ public class ShopUI : MonoBehaviour
             _selectButton.gameObject.SetActive(false);
             _activeButton.gameObject.SetActive(false);
 
-            _buyButton.onClick?.RemoveAllListeners();
-
-            _buyButton.onClick.AddListener(() =>
-            {
-                AudioManager.Instance.PlayClickSound();
-
-                if (GameData.Instance.GetCoins() >= SkinPreviewManager.Instance.GetSkinCost(skinIndex))
-                {
-                    GameData.Instance.DecreaseCoins(SkinPreviewManager.Instance.GetSkinCost(skinIndex));
-
-                    GameData.Instance.AddNewPurchasedSkinToAList(skinIndex);
-
-                    GameData.Instance.SaveGameData();
-
-                    UpdateCoinText();
-
-                    ActivateSelectButton(skinIndex);
-
-                    SkinPreviewManager.Instance.PurchaseSkin(skinIndex);
-                }
-            });
+            InitializeBuyButton(skinIndex);
         }
         else
         {
             ActivateSelectButton(skinIndex);
         }
+    }
+
+    private void InitializeBuyButton(int skinIndex)
+    {
+        _buyButton.onClick?.RemoveAllListeners();
+
+        _buyButton.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.PlayClickSound();
+
+            if (GameData.Instance.GetCoins() >= SkinPreviewManager.Instance.GetSkinCost(skinIndex))
+            {
+                GameData.Instance.DecreaseCoins(SkinPreviewManager.Instance.GetSkinCost(skinIndex));
+
+                GameData.Instance.AddNewPurchasedSkinToAList(skinIndex);
+
+                GameData.Instance.SaveGameData();
+
+                UpdateCoinText();
+
+                ActivateSelectButton(skinIndex);
+
+                SkinPreviewManager.Instance.PurchaseSkin(skinIndex);
+            }
+        });
     }
 
     private void ActivateSelectButton(int skinIndex)
@@ -111,6 +121,11 @@ public class ShopUI : MonoBehaviour
             _activeButton.gameObject.SetActive(false);
         }
 
+        InitializeSelectButton(skinIndex);
+    }
+
+    private void InitializeSelectButton(int skinIndex)
+    {
         _selectButton.onClick?.RemoveAllListeners();
 
         _selectButton.onClick.AddListener(() =>
@@ -139,7 +154,7 @@ public class ShopUI : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
-        
+
         UpdateCoinText();
         SelectSkin(GameData.Instance.GetLastActiveSkinIndex());
     }

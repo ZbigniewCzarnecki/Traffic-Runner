@@ -14,7 +14,7 @@ public class Score : MonoBehaviour
 
     private void Update()
     {
-        if (!GameManager.Instance.IsGamePlaying() || GameManager.Instance.IsGamePaused())
+        if (!GameManager.Instance.IsGamePlaying || GameManager.Instance.IsGamePaused)
         {
             return;
         }
