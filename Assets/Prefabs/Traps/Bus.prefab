@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2481053898022892201
 Transform:
@@ -26,6 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5954593964444884678}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4, y: 0, z: -12.3}
   m_LocalScale: {x: 1, y: 1.3, z: 1}
@@ -33,7 +34,6 @@ Transform:
   m_Children:
   - {fileID: 5369549704540272806}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8318017058598175861
 MeshFilter:
@@ -53,7 +53,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -119,6 +119,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoinGroupParent_Short
       objectReference: {fileID: 0}
+    - target: {fileID: 245630139565986321, guid: 26f8e8e78fa82b644bd88fa4150f5dd7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1684128237865337439, guid: 26f8e8e78fa82b644bd88fa4150f5dd7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1952214473589096157, guid: 26f8e8e78fa82b644bd88fa4150f5dd7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630779476147709110, guid: 26f8e8e78fa82b644bd88fa4150f5dd7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4211008967077955105, guid: 26f8e8e78fa82b644bd88fa4150f5dd7,
         type: 3}
       propertyPath: m_RootOrder
@@ -178,6 +198,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6231028457098710435, guid: 26f8e8e78fa82b644bd88fa4150f5dd7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6499149819732586785, guid: 26f8e8e78fa82b644bd88fa4150f5dd7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6660751337935007749, guid: 26f8e8e78fa82b644bd88fa4150f5dd7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204195124817537646, guid: 26f8e8e78fa82b644bd88fa4150f5dd7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632686680401729480, guid: 26f8e8e78fa82b644bd88fa4150f5dd7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8048742075767052012, guid: 26f8e8e78fa82b644bd88fa4150f5dd7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

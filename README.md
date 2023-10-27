@@ -18,7 +18,8 @@
 # Features
 - Input Manager Based on New Input System.
 - Game Data Saved in Json file.
-- Pooling System 
+- Pooling Systems 
+- GPU Instancing
 
 # Links
 * [Itch.io](https://blackthoughtsdev.itch.io) - Check Other Games

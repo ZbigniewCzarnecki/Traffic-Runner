@@ -25,7 +25,7 @@ public class RoadSpawner : MonoBehaviour
     private float _spawnDistanceOffset;
 
     private int _roadCounter;
-    private readonly int _roadCounterMax = 5;
+    private readonly int _roadCounterMax = 2;
 
     private void Awake()
     {

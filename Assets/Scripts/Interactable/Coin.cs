@@ -6,14 +6,16 @@ public class Coin : MonoBehaviour, IInteractable
     [SerializeField] private SphereCollider _sphereCollider;
     [SerializeField] private MeshRenderer _coinMesh;
 
+    private ParticleSystem _collectCoinParticle;
+
     public void Interact(PlayerInteractions player)
     {
         GameData.Instance.InGameCoins++;
         GameUI.Instance.UpdateCoinText();
 
         AudioManager.Instance.PlayPickUpCoinSound();
-        ParticleManager.Instance.InstantiateCollectCoinParticle(player.transform.position);
-
+        _collectCoinParticle = ParticleManager.Instance.SpawnCollectCoinParticle(player.transform.position);
+        
         StartCoroutine(nameof(CoinBehaviour));
     }
 
@@ -24,6 +26,8 @@ public class Coin : MonoBehaviour, IInteractable
 
         float waitForActivateTime = 1f;
         yield return new WaitForSeconds(waitForActivateTime);
+
+        ParticleManager.Instance.ReleaseParticle(_collectCoinParticle);
 
         _sphereCollider.enabled = true;
         _coinMesh.enabled = true;
