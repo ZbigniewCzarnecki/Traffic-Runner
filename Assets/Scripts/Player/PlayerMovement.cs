@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlayerMovement : PlayerBase
 {
     public event EventHandler OnSlide;
+    [SerializeField] private PlayerInteractions _playerInteractions;
 
     [Header("Player")]
     [SerializeField] private float _speed = 20f;
     [SerializeField] private float _speedIncrease = 0.1f;
     [SerializeField] private float _jumpForce = 35f;
     [SerializeField] private float _changeLaneSpeed = 0.12f;
+    [SerializeField] private float _backOnLaneSpeed = 0.6f;
     [Tooltip("Speed limit to prevent the player from jumping off the ramp uncontrollably.")]
     [SerializeField] private float _walkUpSpeedLimit = 0.5f;
 
@@ -23,9 +25,13 @@ public class PlayerMovement : PlayerBase
     private bool _isJumping;
     private bool _isSliding;
 
+    private float _lastPositionX;
+
     private void Start()
     {
         GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
+
+        _playerInteractions.OnCollideWithPlatformAction += PlayerInteractions_OnCollideWithPlatformAction;
 
         InputManager.Instance.OnSwipeLeft += InputManager_OnSwipeLeft;
         InputManager.Instance.OnSwipeRight += InputManager_OnSwipeRight;
@@ -33,11 +39,15 @@ public class PlayerMovement : PlayerBase
         InputManager.Instance.OnSwipeDown += InputManager_OnSwipeDown;
 
         Score.OnScoreTreshold += Score_OnScoreTreshold;
+
+        _lastPositionX = LaneSystem.Instance.GetCurrentLanePositionX();
     }
 
     private void OnDestroy()
     {
         GameManager.Instance.OnStateChanged -= GameManager_OnStateChanged;
+
+        _playerInteractions.OnCollideWithPlatformAction -= PlayerInteractions_OnCollideWithPlatformAction;
 
         InputManager.Instance.OnSwipeLeft -= InputManager_OnSwipeLeft;
         InputManager.Instance.OnSwipeRight -= InputManager_OnSwipeRight;
@@ -49,13 +59,14 @@ public class PlayerMovement : PlayerBase
 
     private void Update()
     {
-        if (RaycastForward())
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (!_abbleToMove)
         {
-            if (GameManager.Instance.IsGamePlaying)
-            {
-                ParticleManager.Instance.InstantiateHitObstacleParticle(transform.position);
-                GameManager.Instance.GameOver();
-            }
+            return;
         }
 
         if (!_isJumping && _rb.velocity.y > _walkUpSpeedLimit)
@@ -72,14 +83,6 @@ public class PlayerMovement : PlayerBase
         {
             _timeToJump = 0;
         }
-    }
-
-    private void FixedUpdate()
-    {
-        if (!_abbleToMove)
-        {
-            return;
-        }
 
         RunForward();
     }
@@ -94,6 +97,24 @@ public class PlayerMovement : PlayerBase
         {
             _abbleToMove = false;
             _rb.velocity = Vector3.zero;
+        }
+    }
+
+    private void PlayerInteractions_OnCollideWithPlatformAction()
+    {
+        if (RaycastForward())
+        {
+            if (GameManager.Instance.IsGamePlaying)
+            {
+                ParticleManager.Instance.InstantiateHitObstacleParticle(transform.position);
+                GameManager.Instance.GameOver();
+            }
+        }
+
+        if (RaycastRight() || RaycastLeft()) 
+        {
+            MoveToLastPosition();
+            ScreenShake.Instance.Shake();
         }
     }
 
@@ -165,20 +186,27 @@ public class PlayerMovement : PlayerBase
 
     private void MoveLeft()
     {
-        if (!RaycastLeft())
-        {
-            Vector3 targetPosition = LaneSystem.Instance.GetLeftLanePosition();
-            StartCoroutine(MoveToPosition(targetPosition, _changeLaneSpeed));
-        }
+        _lastPositionX = LaneSystem.Instance.GetCurrentLanePositionX();
+
+        Vector3 targetPosition = LaneSystem.Instance.GetLeftLanePosition();
+        StartCoroutine(MoveToPosition(targetPosition, _changeLaneSpeed));
     }
 
     private void MoveRight()
     {
-        if (!RaycastRight())
-        {
-            Vector3 targetPosition = LaneSystem.Instance.GetRightLanePosition();
-            StartCoroutine(MoveToPosition(targetPosition, _changeLaneSpeed));
-        }
+        _lastPositionX = LaneSystem.Instance.GetCurrentLanePositionX();
+
+        Vector3 targetPosition = LaneSystem.Instance.GetRightLanePosition();
+        StartCoroutine(MoveToPosition(targetPosition, _changeLaneSpeed));
+    }
+
+    private void MoveToLastPosition()
+    {
+        LaneSystem.Instance.ResetToLastLane();
+
+        float targetPositionX = _lastPositionX;
+        Vector3 targetPosition = new(targetPositionX, transform.position.y, transform.position.z);
+        StartCoroutine(MoveToPosition(targetPosition, _backOnLaneSpeed));
     }
 
     private IEnumerator MoveToPosition(Vector3 targetPosition, float duration)

@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class RoadTrigger : MonoBehaviour, IInteractable
 {
+    [SerializeField] private Road _road;
+
     public void Interact(PlayerInteractions player)
     {
-        RoadSpawner.Instance.IncreaseRoadCounter();
-        transform.parent.gameObject.SetActive(false);
+        _road.ReleaseRoad();
     }
 }

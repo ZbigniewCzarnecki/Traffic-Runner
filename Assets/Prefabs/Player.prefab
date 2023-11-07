@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 728052061102013052}
   - component: {fileID: 3189323318569365821}
   - component: {fileID: 3301932797542929956}
+  - component: {fileID: 1951811796121536556}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -116,13 +117,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _sphereRadius: 0.3
-  _startPositionOffset: {x: 0, y: 0.5, z: 0}
+  _startPositionOffset: {x: 0, y: 0.8, z: 0}
   _raycastForwardDistance: 0.3
-  _raycastSidesDistance: 4
+  _raycastSidesDistance: 1.5
+  _playerInteractions: {fileID: 3301932797542929956}
   _speed: 20
-  _speedIncrease: 1
+  _speedIncrease: 1.5
   _jumpForce: 35
   _changeLaneSpeed: 0.12
+  _backOnLaneSpeed: 0.9
   _walkUpSpeedLimit: 0.5
   _timeToJumpMax: 0.2
 --- !u!114 &3189323318569365821
@@ -149,6 +152,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df18d095be475d74792619fa68a0c7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _platformLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &1951811796121536556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8279612678097787196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceef8a2e55f0c9843b8f5d77e6459b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _magnetRange: 10
+  _magnetSpeed: 20
+  _magnetTimerMax: 10
 --- !u!1001 &6126360877114889102
 PrefabInstance:
   m_ObjectHideFlags: 0

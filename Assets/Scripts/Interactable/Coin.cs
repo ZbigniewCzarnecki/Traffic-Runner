@@ -1,35 +1,38 @@
-using System.Collections;
+using System;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Coin : MonoBehaviour, IInteractable
 {
-    [SerializeField] private SphereCollider _sphereCollider;
-    [SerializeField] private MeshRenderer _coinMesh;
-
     private ParticleSystem _collectCoinParticle;
+    private ObjectPool<Coin> _coinPool;
 
     public void Interact(PlayerInteractions player)
     {
         GameData.Instance.InGameCoins++;
         GameUI.Instance.UpdateCoinText();
-
         AudioManager.Instance.PlayPickUpCoinSound();
-        _collectCoinParticle = ParticleManager.Instance.SpawnCollectCoinParticle(player.transform.position);
-        
-        StartCoroutine(nameof(CoinBehaviour));
-    }
 
-    private IEnumerator CoinBehaviour()
-    {
-        _sphereCollider.enabled = false;
-        _coinMesh.enabled = false;
+        _collectCoinParticle = ParticleManager.Instance.ActivateCollectCoinParticle(player.transform.position);
 
         float waitForActivateTime = 1f;
-        yield return new WaitForSeconds(waitForActivateTime);
+        Invoke(nameof(ReleaseCoinParticle), waitForActivateTime);
 
+        ReleaseCoin();
+    }
+
+    public void ReleaseCoin()
+    {
+        CoinSpawner.Instance.ReleaseCoin(this);
+    }
+
+    private void ReleaseCoinParticle()
+    {
         ParticleManager.Instance.ReleaseParticle(_collectCoinParticle);
+    }
 
-        _sphereCollider.enabled = true;
-        _coinMesh.enabled = true;
+    public void SetPool(ObjectPool<Coin> coinPool)
+    {
+        _coinPool = coinPool;
     }
 }

@@ -23,6 +23,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2220081103595192861}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -34,18 +35,17 @@ Transform:
   - {fileID: 7748530444927233263}
   - {fileID: 2372569282185110851}
   - {fileID: 4667805568273655454}
-  - {fileID: 231375873715109978}
+  - {fileID: 231375873715247832}
   - {fileID: 8601983712060824631}
   - {fileID: 2627954089891485426}
   - {fileID: 5615258864175141368}
   - {fileID: 6304112677724019620}
-  - {fileID: 6304112677724019686}
+  - {fileID: 7898232932416901348}
   - {fileID: 4988933432681727786}
   - {fileID: 2091794427909052248}
   - {fileID: 2735863525282471803}
   - {fileID: 3330852967786801221}
   m_Father: {fileID: 4043312069883987144}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2391199619306346353
 GameObject:
@@ -71,6 +71,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2391199619306346353}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1000, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -79,7 +80,6 @@ Transform:
   - {fileID: 6581937578953851988}
   - {fileID: 1221932649654639392}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2359446304461378424
 MonoBehaviour:
@@ -96,36 +96,68 @@ MonoBehaviour:
   _skinPrefabsArray:
   - cost: 0
     skinPrefab: {fileID: 5739207703589930837}
+    iconSprite: {fileID: 0}
+    purchased: 0
   - cost: 100
     skinPrefab: {fileID: 5600036279369827221}
+    iconSprite: {fileID: 0}
+    purchased: 0
   - cost: 200
     skinPrefab: {fileID: 6251202358823228818}
+    iconSprite: {fileID: 0}
+    purchased: 0
   - cost: 300
     skinPrefab: {fileID: 7748530444926742735}
+    iconSprite: {fileID: 0}
+    purchased: 0
   - cost: 400
     skinPrefab: {fileID: 2372569282184886627}
+    iconSprite: {fileID: 0}
+    purchased: 0
   - cost: 500
     skinPrefab: {fileID: 4667805568273824446}
+    iconSprite: {fileID: 0}
+    purchased: 0
   - cost: 600
-    skinPrefab: {fileID: 231375873715109977}
+    skinPrefab: {fileID: 231375873715144440}
+    iconSprite: {fileID: 0}
+    purchased: 0
   - cost: 700
     skinPrefab: {fileID: 8601983712060719127}
+    iconSprite: {fileID: 0}
+    purchased: 0
   - cost: 800
     skinPrefab: {fileID: 2627954089891449554}
+    iconSprite: {fileID: 0}
+    purchased: 0
   - cost: 900
     skinPrefab: {fileID: 5615258864174910936}
+    iconSprite: {fileID: 0}
+    purchased: 0
   - cost: 1000
     skinPrefab: {fileID: 6304112677723654020}
+    iconSprite: {fileID: 0}
+    purchased: 0
   - cost: 10000
-    skinPrefab: {fileID: 6304112677723654086}
+    skinPrefab: {fileID: 7898232932417391812}
+    iconSprite: {fileID: 0}
+    purchased: 0
   - cost: 2000
     skinPrefab: {fileID: 4988933432682158858}
+    iconSprite: {fileID: 0}
+    purchased: 0
   - cost: 2000
     skinPrefab: {fileID: 2091794427909409656}
+    iconSprite: {fileID: 0}
+    purchased: 0
   - cost: 2000
     skinPrefab: {fileID: 2735863525282890587}
+    iconSprite: {fileID: 0}
+    purchased: 0
   - cost: 2000
     skinPrefab: {fileID: 3330852967786706021}
+    iconSprite: {fileID: 0}
+    purchased: 0
 --- !u!1 &5226440666758237089
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,13 +182,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5226440666758237089}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.021205928, y: 0.9782729, z: -0.128792, w: 0.1610751}
   m_LocalPosition: {x: -6.01, y: 6.53, z: 17.678}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4043312069883987144}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 15, y: 161.3, z: 0}
 --- !u!20 &2010196104511429648
 Camera:
@@ -274,13 +306,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf91565473708de4c99fc969ec13f002, type: 3}
---- !u!1 &231375873715109977 stripped
+--- !u!1 &231375873715144440 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: cf91565473708de4c99fc969ec13f002,
     type: 3}
   m_PrefabInstance: {fileID: 231375873715109976}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &231375873715109978 stripped
+--- !u!4 &231375873715247832 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: cf91565473708de4c99fc969ec13f002,
     type: 3}
@@ -1348,15 +1380,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba88d52e519164c4a84f82dc39d32c3e, type: 3}
---- !u!1 &6304112677723654086 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100066, guid: ba88d52e519164c4a84f82dc39d32c3e,
+--- !u!4 &7898232932416901348 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400066, guid: ba88d52e519164c4a84f82dc39d32c3e,
     type: 3}
   m_PrefabInstance: {fileID: 7898232932417292838}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &6304112677724019686 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400066, guid: ba88d52e519164c4a84f82dc39d32c3e,
+--- !u!1 &7898232932417391812 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100066, guid: ba88d52e519164c4a84f82dc39d32c3e,
     type: 3}
   m_PrefabInstance: {fileID: 7898232932417292838}
   m_PrefabAsset: {fileID: 0}

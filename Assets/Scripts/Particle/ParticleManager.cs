@@ -22,12 +22,12 @@ public class ParticleManager : MonoBehaviour
 
         Instance = this;
 
-        _collectParticlePool = new ObjectPool<ParticleSystem>(CreatePooledParticle, OnGetParticleFromPool, OnReleaseParticleFromPool, OnDestroyParticle, true, 10, 50);
+        _collectParticlePool = new ObjectPool<ParticleSystem>(CreateParticlePool, OnGetParticleFromPool, OnReleaseParticleFromPool, OnDestroyParticle, true, 10, 50);
     }
 
-    #region CollectParticlePool
+    #region Pool
 
-    private ParticleSystem CreatePooledParticle()
+    private ParticleSystem CreateParticlePool()
     {
         ParticleSystem tmp = Instantiate(_collectCoinParticle);
         return tmp;
@@ -48,18 +48,18 @@ public class ParticleManager : MonoBehaviour
         Destroy(particle.gameObject);
     }
 
-    public void ReleaseParticle(ParticleSystem particle)
-    {
-        _collectParticlePool.Release(particle);
-    }
-
     #endregion
 
-    public ParticleSystem SpawnCollectCoinParticle(Vector3 instantiatePosition)
+    public ParticleSystem ActivateCollectCoinParticle(Vector3 instantiatePosition)
     {
         ParticleSystem collectParticle = _collectParticlePool.Get();
         collectParticle.gameObject.transform.SetPositionAndRotation(instantiatePosition + _instantiateOffset, Quaternion.identity);
         return collectParticle;
+    }
+
+    public void ReleaseParticle(ParticleSystem particle)
+    {
+        _collectParticlePool.Release(particle);
     }
 
     public void InstantiateHitObstacleParticle(Vector3 instantiatePosition)

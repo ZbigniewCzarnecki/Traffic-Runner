@@ -36,16 +36,12 @@ public class GameOverUI : MonoBehaviour
     {
         if (GameManager.Instance.IsGameOver)
         {
-            Show();
+            float timeToShowGameOverUI = 0.5f;
+            Invoke(nameof(Show), timeToShowGameOverUI);
 
             _scoreText.text = "Score: " + GameData.Instance.InGameScore.ToString("000000");
             _coinText.text = "Coins: " + GameData.Instance.InGameCoins.ToString("0000");
         }
-        else
-        {
-            Hide();
-        }
-
     }
 
     private void Show()

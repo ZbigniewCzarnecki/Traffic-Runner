@@ -13,9 +13,11 @@ public class LaneSystem : MonoBehaviour
     }
 
     private Lane _lane = Lane.Mid;
+    private Lane _lastLane;
 
     [SerializeField] private float[] _lanePositionX;
     private float _targetPositionX;
+
 
     private void Awake()
     {
@@ -35,16 +37,19 @@ public class LaneSystem : MonoBehaviour
         {
             case Lane.Left:
                 {
+                    _lastLane = Lane.Left;
                     Debug.Log("Hit A Wall");
                     break;
                 }
             case Lane.Mid:
                 {
+                    _lastLane = Lane.Mid;
                     _lane = Lane.Left;
                     break;
                 }
             case Lane.Right:
                 {
+                    _lastLane = Lane.Right;
                     _lane = Lane.Mid;
                     break;
                 }
@@ -67,16 +72,19 @@ public class LaneSystem : MonoBehaviour
         {
             case Lane.Left:
                 {
+                    _lastLane = Lane.Left;
                     _lane = Lane.Mid;
                     break;
                 }
             case Lane.Mid:
                 {
+                    _lastLane = Lane.Mid;
                     _lane = Lane.Right;
                     break;
                 }
             case Lane.Right:
                 {
+                    _lastLane = Lane.Right;
                     Debug.Log("Hit A Wall");
                     break;
                 }
@@ -93,9 +101,9 @@ public class LaneSystem : MonoBehaviour
         return targetPosition;
     }
 
-    public void ResetLane()
+    public void ResetToLastLane()
     {
-        _lane = Lane.Mid;
+        _lane = _lastLane;
     }
 
     public string GetCurrentLaneString()
